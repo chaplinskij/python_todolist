@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+.idea/*
+__pycache__
+env/*
+pip/*
+db.sqlite3
+
+

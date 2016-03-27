@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block login %}
+    <div class="container">
+        <form action="/auth/register/" method="POST">
+            {% csrf_token %}
+             <div class="alert alert-success">
+                 <h2 class="form-signin-heading">Please register</h2>
+                 {{ form.as_p  }}
+                 <button  name="submit" id="submit" value="" type="submit" class="btn btn-large btn-primary ">Register</button>
+                 <span> OR </span>
+                 <button   type="button" class="btn btn-large btn-success " onclick="location.href='/auth/login/'">Sign in</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
