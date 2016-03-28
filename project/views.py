@@ -6,12 +6,9 @@ from django.shortcuts import render_to_response, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.context_processors import csrf
 from django.contrib import auth
-from django.core.paginator import Paginator
-from django.core import serializers
 from project.models import Project, Task
 from project.forms import ProjectForm, TaskForm
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
@@ -22,12 +19,16 @@ def home(request):
 
 
 def show_all(request):
-    user = auth.get_user(request).id
-    args = {}
-    args.update(csrf(request))
-    args['projects'] = Project.objects.filter(user=user)
-    args['username'] = auth.get_user(request).username
-    return render_to_response('project_list.html', args)
+    if request.user.is_authenticated():
+        user = auth.get_user(request).id
+        args = {}
+        args.update(csrf(request))
+        args['projects'] = Project.objects.filter(user=user)
+        args['username'] = auth.get_user(request).username
+        return render_to_response('project_list.html', args)
+    else:
+        return redirect('/auth/login/')
+
 
 
 @csrf_exempt
@@ -41,6 +42,7 @@ def add_project(request):
             project.user = auth.get_user(request)
             project.name = args['name']
             project.save()
+            args['id'] = project.id
 
         return render_to_response( 'project.html', args)
 
@@ -72,9 +74,10 @@ def add_task(request):
         args['name'] = request.POST.get('name')
         args['project'] = request.POST.get('project')
         if form.is_valid():
-            project = form.save(commit=False)
-            project.status = False
-            project.save()
+            task = form.save(commit=False)
+            task.status = False
+            task.save()
+            args['id'] = task.id
         return render_to_response('task.html', args)
 
 

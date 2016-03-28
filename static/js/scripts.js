@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	//Add a project
-	$('#addProject').click( function(){
+	$(".container").on('click','#addProject', function(){
 		var query = {};
 		query.name = prompt("Please enter the name of new project");
 		if (query.name != null) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 
 	//Rename projects/task
-	$('.glyphicon-pencil').on('click', function () {
+	$(".container").on('click', '.glyphicon-pencil', function () {
 		if($(this).hasClass('project-pencil')){
 			var project_id = this.id.replace('project-pencil-', '');
 			var elem = $("#project-name-" + project_id);
@@ -61,7 +61,7 @@ $(document).ready(function() {
 	});
 
 	//Delete projects/task
-	$('.glyphicon-trash').on('click', function () {
+	$(".container").on('click', '.glyphicon-trash', function () {
 		if($(this).hasClass('trash-task')){
 			var query = {};
 			query.id = $(this).closest('tr')[0].id.replace('task-', '');
@@ -94,7 +94,7 @@ $(document).ready(function() {
 	});
 
 	//Add new task
-	$('.add-task').on('click', function(){
+	$(".container").on('click', '.add-task', function(){
 		var query = {};
 		query.project = $(this).parent().parent().children('.form-control')[0].id.replace('new-task-name-', '');
 		query.name = $(this).parent().parent().children('.form-control')[0].value;

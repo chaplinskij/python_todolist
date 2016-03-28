@@ -1,18 +1,20 @@
-<tr>
+<tr id="task-{{ id }}">
     <td class="task_checkbox">
-        <input type="checkbox">
+        <input type="checkbox" >
     </td>
-    <td class="task_name">{{ name }} </td>
+    <td>
+        <div id="task-name-{{ id }}" class="task-name no-bg" contenteditable="false">{{ name }}</div>
+    </td>
     <td class="task_btn">
         <div class="row">
             <div class="col-xs-4 text-right " style="border-right: 1px solid #ccc;padding: 0 8px;">
                 <span class="glyphicon glyphicon-resize-vertical"></span>
             </div>
             <div class="col-xs-3 text-center" style="border-right: 1px solid #ccc;padding: 0 8px;">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <span id="task-pencil-{{ id }}" class="glyphicon glyphicon-pencil task-pencil"></span>
             </div>
             <div class="col-xs-3 text-left">
-                <span class="glyphicon glyphicon-trash"></span>
+                <span class="glyphicon glyphicon-trash trash-task"></span>
             </div>
         </div>
     </td>
