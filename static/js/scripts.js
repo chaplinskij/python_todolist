@@ -76,7 +76,19 @@ $(document).ready(function() {
 			});
 		}
 		else if($(this).hasClass('trash-project')){
-// СЮДА ДОБАВИТЬ КОД ДЛЯ УДАЛЕНИЯ ПРОЕКТА
+			var query = {};
+			query.id = this.id.replace('project-trash-', '');
+			if(confirm("Are you sure that you want to delete a project?")) {
+				$.ajax({
+					type: "POST",
+					url: "/project/delete_project/",
+					dataType: "text",
+					data: query,
+					success: function () {
+						$('#project-' + query.id).remove();
+					}
+				});
+			}
 		}
 
 	});

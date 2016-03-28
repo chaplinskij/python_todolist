@@ -4,7 +4,7 @@
     <div class="container">
         {% csrf_token %}
             {% for project in projects %}
-                <div class="panel panel-primary no-top-radius lg-bottom-radius ">
+                <div id="project-{{ project.id }}" class="panel panel-primary no-top-radius lg-bottom-radius ">
                     <div class="panel-heading no-top-radius " >
                         <div class="row">
                             <div class="col-sm-10">
@@ -19,7 +19,7 @@
                                         <span id="project-pencil-{{ project.id }}" class="glyphicon glyphicon-pencil project-pencil"></span>
                                     </span>
                                     <span class="col-xs-5 text-left">
-                                        <span class="glyphicon glyphicon-trash trash-project"></span>
+                                        <span id="project-trash-{{ project.id }}" class="glyphicon glyphicon-trash trash-project"></span>
                                     </span>
                                 </div>
                             </div>

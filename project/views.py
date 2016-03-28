@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.context_processors import csrf
 from django.contrib import auth
 from django.core.paginator import Paginator
+from django.core import serializers
 from project.models import Project, Task
 from project.forms import ProjectForm, TaskForm
 from django.http import JsonResponse
@@ -54,12 +55,12 @@ def change_project(request):
 
 
 @csrf_exempt
-def change_task(request):
+def delete_project(request):
     if request.POST:
-        task = Task.objects.get(id=request.POST.get('id'))
-        task.name = request.POST.get('name')
-        task.save()
-        print("good save")
+        project = Project.objects.get(id=request.POST.get('id'))
+        tasks = Task.objects.filter(project=project).delete()
+        project.delete()
+        #tasks = Task.objects.filter(project=project)
     return redirect('/')
 
 
@@ -74,9 +75,17 @@ def add_task(request):
             project = form.save(commit=False)
             project.status = False
             project.save()
-        else:
-            print(form)
         return render_to_response('task.html', args)
+
+
+@csrf_exempt
+def change_task(request):
+    if request.POST:
+        task = Task.objects.get(id=request.POST.get('id'))
+        task.name = request.POST.get('name')
+        task.save()
+        print("good save")
+    return redirect('/')
 
 
 @csrf_exempt
